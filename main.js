@@ -7,7 +7,7 @@
 
 //Load required libraries.
 const Discord = require("discord.js");
-const Enmap  = require("enmap");
+const Enmap = require("enmap");
 const SQLite = require("better-sqlite3")
 const fs = require("fs");
 
@@ -36,17 +36,17 @@ client.on("ready", () => {
 
 //Load the events.
 fs.readdir("./events/", (err, files) => {
-    //If cant read events, abort.
-    if (err) return console.error(err);
-    //For each file...
-    files.forEach(file => {
-      //Declare it as required.
-      const event = require(`./events/${file}`);
-      //Get the event name from the file name.
-      let eventName = file.split(".")[0];
-      //Listen for event.
-      client.on(eventName, event.bind(null, client));
-    });
+  //If cant read events, abort.
+  if (err) return console.error(err);
+  //For each file...
+  files.forEach(file => {
+    //Declare it as required.
+    const event = require(`./events/${file}`);
+    //Get the event name from the file name.
+    let eventName = file.split(".")[0];
+    //Listen for event.
+    client.on(eventName, event.bind(null, client));
+  });
 });
 
 //Prepare a map of commands.
@@ -54,21 +54,21 @@ client.commands = new Enmap();
 
 //Read the commands folder.
 fs.readdir("./commands/", (err, files) => {
-    console.log("Loading commands...");
-    //If cant read events, abort.
-    if (err) return console.error(err);
-    //For each file...
-    files.forEach(file => {
-      //Check the file ends with .js, otherwise ignore it.
-      if (!file.endsWith(".js")) return;
-      //Declare the command as required.
-      let props = require(`./commands/${file}`);
-      //Get the command name from the file name.
-      let commandName = file.split(".")[0];
-      //Load the command into the map.
-      console.log(`Loading command "${commandName}" into the command map.`);
-      client.commands.set(commandName, props);
-    });
+  console.log("Loading commands...");
+  //If cant read events, abort.
+  if (err) return console.error(err);
+  //For each file...
+  files.forEach(file => {
+    //Check the file ends with .js, otherwise ignore it.
+    if (!file.endsWith(".js")) return;
+    //Declare the command as required.
+    let props = require(`./commands/${file}`);
+    //Get the command name from the file name.
+    let commandName = file.split(".")[0];
+    //Load the command into the map.
+    console.log(`Loading command "${commandName}" into the command map.`);
+    client.commands.set(commandName, props);
+  });
     console.log("Commands succesfully loaded.");
 });
 
