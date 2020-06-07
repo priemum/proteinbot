@@ -8,10 +8,8 @@ exports.run = (client, message, args) => {
     //Get mentioned user
     try {
         let member = message.mentions.members.first().id;
-        console.log(member);
         //Get current user score
         let score = client.getScore.get(member);
-        console.log(score);
         if (score == null) {
             message.reply("no record was found for this user.");
             return;
@@ -47,7 +45,7 @@ exports.run = (client, message, args) => {
             }
             //Write to database
             client.setScore.run(score);
-            console.log("[" + (new Date()) + "] " + message.author.id + " has administratively added " + number + " points to " + member + ".");
+            console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " points to " + member + " (" + client.users.cache.get(member).username + ").");
 
             //Announce the addition
             message.reply("Administratively added " + number + " pushups to " + args[0] + ".\nNew total is: " + score.points + " :muscle:")

@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
         }
         
         const username = client.users.cache.get(member).username;
-        console.log("[" + (new Date()) + "] " + message.author.id + " requested the info of " + member + ".");
+        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the info of " + member + " (" + client.users.cache.get(member).username + ").");
         const embed = new Discord.MessageEmbed()
             .setTitle("Info for " + username)
             .setColor(0x00AE86)
@@ -38,7 +38,7 @@ exports.run = (client, message, args) => {
             //Write to database
             client.setScore.run(score);
         }
-        console.log("[" + (new Date()) + "] " + message.author.id + " requested their info.");
+        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their info.");
         //Print requesters score
         const embed = new Discord.MessageEmbed()
         .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)
