@@ -47,7 +47,7 @@ exports.run = (client, message, args) => {
             }
             //Write to database
             client.setScore.run(score);
-            console.log(message.author.id + " has administratively added " + number + " points to " + member + ".");
+            console.log("[" + (new Date()) + "] " + message.author.id + " has administratively added " + number + " points to " + member + ".");
 
             //Announce the addition
             message.reply("Administratively added " + number + " pushups to " + args[0] + ".\nNew total is: " + score.points + " :muscle:")

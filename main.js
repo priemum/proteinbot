@@ -18,7 +18,7 @@ const sql = new SQLite('./scores.sqlite');
 client.config = config;
 
 client.on("ready", () => {
-  console.log("Preparing SQL database...");
+  console.log("[" + (new Date()) + "] " + "Preparing SQL database...");
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
   if (!table['count(*)']) {
     //If the table isn't there, create it and setup the database correctly.
@@ -30,8 +30,8 @@ client.on("ready", () => {
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, points, lastSubmit) VALUES (@id, @points, @lastSubmit);");
-  console.log("SQL database prepared.");
-  console.log("Boot sequence complete.");
+  console.log("[" + (new Date()) + "] " + "SQL database prepared.");
+  console.log("[" + (new Date()) + "] " + "Boot sequence complete.");
 });
 
 //Load the events.
@@ -54,7 +54,7 @@ client.commands = new Enmap();
 
 //Read the commands folder.
 fs.readdir("./commands/", (err, files) => {
-  console.log("Loading commands...");
+  console.log("[" + (new Date()) + "] " + "Loading commands...");
   //If cant read events, abort.
   if (err) return console.error(err);
   //For each file...
@@ -66,12 +66,12 @@ fs.readdir("./commands/", (err, files) => {
     //Get the command name from the file name.
     let commandName = file.split(".")[0];
     //Load the command into the map.
-    console.log(`Loading command "${commandName}" into the command map.`);
+    console.log("[" + (new Date()) + "] " + `Loading command "${commandName}" into the command map.`);
     client.commands.set(commandName, props);
   });
-    console.log("Commands succesfully loaded.");
+    console.log("[" + (new Date()) + "] " + "Commands succesfully loaded.");
 });
 
-console.log("Logging into discord...");
+console.log("[" + (new Date()) + "] " + "Logging into discord...");
 client.login(config.token);
-console.log("Successfully logged in.");
+console.log("[" + (new Date()) + "] " + "Successfully logged in.");

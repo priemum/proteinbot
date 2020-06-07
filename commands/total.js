@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
         }
         //Print mentioned users score
         message.reply(args[0] + "\'s total is " + score.points + " pushups. :muscle:")
-        console.log(message.author.id + " requested " + member + "'s total of " + score.points + ".");
+        console.log("[" + (new Date()) + "] " + message.author.id + " requested " + member + "'s total of " + score.points + ".");
         return;
     } 
     catch {
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
         }
         //Print requesters score
         message.reply("your total is " + score.points + " pushups. :muscle:")
-        console.log(message.author.id + " requested their total of " + score.points + ".");
+        console.log("[" + (new Date()) + "] " + message.author.id + " requested their total of " + score.points + ".");
         return;
     }
 };

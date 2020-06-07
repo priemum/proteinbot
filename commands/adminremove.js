@@ -45,7 +45,7 @@ exports.run = (client, message, args) => {
             }
             //Write to database
             client.setScore.run(score);
-            console.log(message.author.id + " has administratively removed " + number + " points from " + member + ".");
+            console.log("[" + (new Date()) + "] " + message.author.id + " has administratively removed " + number + " points from " + member + ".");
 
             //Announce the removal
             message.reply("Administratively removed " + number + " pushups from " + args[0] + ".\nNew total is: " + score.points + " :cold_sweat:")

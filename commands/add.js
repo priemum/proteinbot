@@ -47,7 +47,7 @@ exports.run = (client, message, args) => {
         }
         //Write to database
         client.setScore.run(score);
-        console.log(message.author.id + " added " + number + " points.");
+        console.log("[" + (new Date()) + "] " + message.author.id + " added " + number + " points.");
 
         //Prepare the "motivation"
         if (number < 20) {

@@ -44,7 +44,7 @@ exports.run = (client, message, args) => {
         }
         //Write to database
         client.setScore.run(score);
-        console.log(message.author.id + " removed " + number + " points.");
+        console.log("[" + (new Date()) + "] " + message.author.id + " removed " + number + " points.");
 
         //Announce the removal
         message.reply("removed " + number + " pushups. What a shame. \nYour new total is: " + score.points + " :cold_sweat:")
