@@ -4,7 +4,7 @@ const sql = new SQLite('./scores.sqlite');
 
 exports.run = (client, message, args) => {
 
-    const top10 = sql.prepare("SELECT * FROM scores ORDER BY points DESC LIMIT 10;").all();
+    const top10 = sql.prepare("SELECT * FROM overallScores ORDER BY points DESC LIMIT 10;").all();
     console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the leaderboard.");
 
     //Print leaderboard embed

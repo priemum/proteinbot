@@ -6,8 +6,8 @@ exports.run = (client, message, args) => {
     //Get current user score
     let score = client.getScore.get(message.member.user.id);
     //Load "motivation"
-    var coulddobetter = ['Could do better...', 'Maybe push yourself more next time?', 'C\'mon!', 'Weirdchamp']
-    var positive = ['Nice work.', 'Nailed it!', 'Keep it up!', 'Legendary!', 'Poggers!', 'Pogchamp.']
+    var coulddobetter = ['Could do better...', 'Maybe push yourself more next time?', 'C\'mon!', 'Weirdchamp', 'I\'m still under development too...']
+    var positive = ['Nice work.', 'Nailed it!', 'Keep it up!', 'Legendary!', 'Poggers!', 'Pogchamp.', 'Whoa!', 'Awesome!']
 
     //Check if we already have an entry
     //If we dont have an entry, initialize at 0.

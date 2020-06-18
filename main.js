@@ -8,7 +8,7 @@
 //Load required libraries.
 const Discord = require("discord.js");
 const Enmap = require("enmap");
-const SQLite = require("better-sqlite3")
+const SQLite = require("better-sqlite3");
 const fs = require("fs");
 
 //Load config and declare a new client.
@@ -19,17 +19,17 @@ client.config = config;
 
 client.on("ready", () => {
   console.log("[" + (new Date()) + "] " + "Preparing SQL database...");
-  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
+  const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'overallScores';").get();
   if (!table['count(*)']) {
     //If the table isn't there, create it and setup the database correctly.
-    sql.prepare("CREATE TABLE scores (id TEXT PRIMARY KEY, points INTEGER, lastSubmit DATE);").run();
+    sql.prepare("CREATE TABLE overallScores (id TEXT PRIMARY KEY, points INTEGER, lastSubmit DATE);").run();
     //Ensure that the "id" row is always unique and indexed.
-    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON scores (id);").run();
+    sql.prepare("CREATE UNIQUE INDEX idx_scores_id ON overallScores (id);").run();
     sql.pragma("synchronous = 1");
     sql.pragma("journal_mode = wal");
   }
-  client.getScore = sql.prepare("SELECT * FROM scores WHERE id = ?");
-  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, points, lastSubmit) VALUES (@id, @points, @lastSubmit);");
+  client.getScore = sql.prepare("SELECT * FROM overallScores WHERE id = ?");
+  client.setScore = sql.prepare("INSERT OR REPLACE INTO overallScores (id, points, lastSubmit) VALUES (@id, @points, @lastSubmit);");
   console.log("[" + (new Date()) + "] " + "SQL database prepared.");
   console.log("[" + (new Date()) + "] " + "Boot sequence complete.");
 });
