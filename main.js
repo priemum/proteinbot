@@ -13,11 +13,17 @@ const fs = require("fs");
 
 //Load config and declare a new client.
 const config = require("./config.json");
+const pointscheme = require("./pointscheme.json");
 const client = new Discord.Client();
 const sql = new SQLite('./scores.sqlite');
 client.config = config;
 
 client.on("ready", () => {
+  console.log("[" + (new Date()) + "] " + "Successfully logged in as " + client.user.tag + ".");
+  console.log("[" + (new Date()) + "] " + "Checking for suitable points scheme...");
+  if (fs.existsSync("./pointscheme.json")) {
+    console.log("[" + (new Date()) + "] " + "Points scheme was successfully found.");
+  }
   console.log("[" + (new Date()) + "] " + "Preparing SQL database...");
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'overallScores';").get();
   if (!table['count(*)']) {
@@ -74,4 +80,3 @@ fs.readdir("./commands/", (err, files) => {
 
 console.log("[" + (new Date()) + "] " + "Logging into discord...");
 client.login(config.token);
-console.log("[" + (new Date()) + "] " + "Successfully logged in.");

@@ -1,10 +1,30 @@
 const config = require("../config.json");
 
 exports.run = (client, message, args) => {
+  const pointscheme = require("../pointscheme.json");
   //Check if sender has the correct permissions to operate this command.
   if (config.admins.includes(message.member.user.id)) {
     //Get arguments
-    let number = args[1];
+    let number = args[2];
+    let type;
+    try {
+        type = args[1].toLowerCase();
+    } catch {
+        message.reply("Please include the name of the sport and the amount of units.");
+        return;
+    }
+
+    //Check if sport is valid and get its point value if so
+    if (`${type}` in pointscheme) {
+        var jsonstring = JSON.stringify(pointscheme)
+        var objectValue = JSON.parse(jsonstring);
+        sportvalue = objectValue[`${type}`];
+    }
+    else {
+        message.reply(`${type}` + " is not a valid or supported sport.");
+        return;
+    }
+
     //Get mentioned user
     try {
         let member = message.mentions.members.first().id;
@@ -15,12 +35,13 @@ exports.run = (client, message, args) => {
             return;
         }
         if (number == null) {
-            message.reply("please specify an amount of pushups to add.")
+            message.reply("please specify an amount of units to add.")
             return;
         }
+        
         //Check argument is a number
         if (isNaN(number)) {
-            message.reply("\"" + args[1] + "\" is not a number.");
+            message.reply("\"" + args[2] + "\" is not a number.");
             return;
         }
         else if (number % 1 != 0) {
@@ -30,12 +51,15 @@ exports.run = (client, message, args) => {
         }
         else if (number < 1) {
             //If number is negative, reject it
-            message.reply("please dont enter negatives, this is >adminremove anyway.")
+            message.reply("please dont enter negatives, use >adminremove.")
             return;
         }
         else {
+            //CALCULATE THE SPORTS POINT TOTAL
+            totalvalue = (sportvalue * number);
+
             //Increment the points
-            for (i = 0; i < number; i++) {
+            for (i = 0; i < totalvalue; i++) {
                 score.points++
             }
             score = {
@@ -45,10 +69,10 @@ exports.run = (client, message, args) => {
             }
             //Write to database
             client.setScore.run(score);
-            console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " points to " + member + " (" + client.users.cache.get(member).username + ").");
+            console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " units of " + type + ", totalling " + totalvalue + " points to " + member + " (" + client.users.cache.get(member).username + ").");
 
             //Announce the addition
-            message.reply("Administratively added " + number + " pushups to " + args[0] + ".\nNew total is: " + score.points + " :muscle:")
+            message.reply("Administratively added " + number + " units of " + type + ", totalling " + totalvalue + " points to " + args[0] + ".\nNew all time points total is: " + score.points + " :muscle:")
             return;
         }
     } 

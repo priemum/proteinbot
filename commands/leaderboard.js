@@ -16,7 +16,7 @@ exports.run = (client, message, args) => {
 
         for(const data of top10) {
             const username = client.users.cache.get(data.id).username
-            embed.addField(`${username}`, `${data.points} pushups`);
+            embed.addField(`${username}`, `${data.points} points`);
         }
 
         return message.channel.send({embed});

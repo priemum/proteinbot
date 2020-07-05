@@ -19,8 +19,8 @@ exports.run = (client, message, args) => {
             .setTimestamp()
             .setFooter('Protein')
 
-            .addField(`Number of pushups:`, `${score.points}`)
-            .addField(`Last pushups added at:`, `${score.lastSubmit}`)
+            .addField(`Total points:`, `${score.points}`)
+            .addField(`Last exercise added at:`, `${score.lastSubmit}`)
 
             return message.channel.send({embed});
     } 
@@ -46,8 +46,8 @@ exports.run = (client, message, args) => {
         .setTimestamp()
         .setFooter('Protein')
 
-        .addField(`Number of pushups:`, `${score.points}`)
-        .addField(`Last pushups added at:`, `${score.lastSubmit}`)
+        .addField(`Total points:`, `${score.points}`)
+        .addField(`Last exercise added at:`, `${score.lastSubmit}`)
 
         return message.channel.send({embed});
     }
