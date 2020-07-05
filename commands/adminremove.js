@@ -35,7 +35,7 @@ exports.run = (client, message, args) => {
             return;
         }
         if (number == null) {
-            message.reply("please specify an amount of units to add.")
+            message.reply("please specify an amount of units to remove.")
             return;
         }
         
