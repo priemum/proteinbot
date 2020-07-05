@@ -9,7 +9,7 @@ exports.run = (client, message, args) => {
 
     //Print leaderboard embed
     const embed = new Discord.MessageEmbed()
-        .setTitle("Leaderboard")
+        .setTitle("All-time Leaderboard")
         .setColor(0x00AE86)
         .setTimestamp()
 	    .setFooter('Protein')
