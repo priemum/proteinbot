@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
             message.reply("no record was found for this user.");
             return;
         }
-        
+
         const username = client.users.cache.get(member).username;
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the info of " + member + " (" + client.users.cache.get(member).username + ").");
         const embed = new Discord.MessageEmbed()
@@ -22,9 +22,10 @@ exports.run = (client, message, args) => {
             .addField(`Total points:`, `${score.points}`)
             .addField(`Last exercise added at:`, `${score.lastSubmit}`)
 
-            return message.channel.send({embed});
-    } 
-    catch {
+        return message.channel.send({
+            embed
+        });
+    } catch {
         //Get requesters score
         let score = client.getScore.get(message.member.user.id)
         //Check if we already have an entry
@@ -41,14 +42,16 @@ exports.run = (client, message, args) => {
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their info.");
         //Print requesters score
         const embed = new Discord.MessageEmbed()
-        .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)
-        .setColor(0x00AE86)
-        .setTimestamp()
-        .setFooter('Protein')
+            .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)
+            .setColor(0x00AE86)
+            .setTimestamp()
+            .setFooter('Protein')
 
-        .addField(`Total points:`, `${score.points}`)
-        .addField(`Last exercise added at:`, `${score.lastSubmit}`)
+            .addField(`Total points:`, `${score.points}`)
+            .addField(`Last exercise added at:`, `${score.lastSubmit}`)
 
-        return message.channel.send({embed});
+        return message.channel.send({
+            embed
+        });
     }
 };

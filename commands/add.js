@@ -34,8 +34,7 @@ exports.run = (client, message, args) => {
         var jsonstring = JSON.stringify(pointscheme)
         var objectValue = JSON.parse(jsonstring);
         sportvalue = objectValue[`${type}`];
-    }
-    else {
+    } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
         return;
@@ -45,22 +44,18 @@ exports.run = (client, message, args) => {
     //Check argument is a number
     if (number == null) {
         message.reply("Please enter a number. If the sport you're entering is timed, input the nearest whole minute.");
-    }
-    else if (isNaN(number)) {
+    } else if (isNaN(number)) {
         message.reply("\"" + args[1] + "\" is not a number. If the sport you're entering is timed, input the nearest whole minute.");
         return;
-    }
-    else if (number % 1 != 0) {
+    } else if (number % 1 != 0) {
         //If number is a decimal
         message.reply("That is a decimal number, please enter a whole number. If the sport you're entering is timed, input the nearest whole minute.")
         return;
-    }
-    else if (number < 1) {
+    } else if (number < 1) {
         //If number is negative, reject it
         message.reply("That is a negative number, use >remove if you want to remove.")
         return;
-    }
-    else {
+    } else {
         //CALCULATE THE SPORTS POINT TOTAL
         totalvalue = (sportvalue * number);
 
@@ -80,8 +75,7 @@ exports.run = (client, message, args) => {
         //Prepare the "motivation"
         if (number < 20) {
             selectedmotivation = coulddobetter[Math.floor(Math.random() * coulddobetter.length)]
-        }
-        else {
+        } else {
             selectedmotivation = positive[Math.floor(Math.random() * positive.length)]
         }
 

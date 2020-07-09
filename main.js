@@ -76,7 +76,7 @@ fs.readdir("./commands/", (err, files) => {
     console.log("[" + (new Date()) + "] " + `Loading command "${commandName}" into the command map.`);
     client.commands.set(commandName, props);
   });
-    console.log("[" + (new Date()) + "] " + "Commands succesfully loaded.");
+  console.log("[" + (new Date()) + "] " + "Commands succesfully loaded.");
 });
 
 console.log("[" + (new Date()) + "] " + "Logging into discord...");

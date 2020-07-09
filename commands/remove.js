@@ -27,13 +27,12 @@ exports.run = (client, message, args) => {
         client.setScore.run(score);
     }
 
-     //Check if sport is valid and get its point value if so
-     if (`${type}` in pointscheme) {
+    //Check if sport is valid and get its point value if so
+    if (`${type}` in pointscheme) {
         var jsonstring = JSON.stringify(pointscheme)
         var objectValue = JSON.parse(jsonstring);
         sportvalue = objectValue[`${type}`];
-    }
-    else {
+    } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
         return;
@@ -43,18 +42,15 @@ exports.run = (client, message, args) => {
     if (isNaN(number)) {
         message.reply("\"" + args[0] + "\" is not a number. If the sport you're entering is timed, input the nearest whole minute.");
         return;
-    }
-    else if (number % 1 != 0) {
+    } else if (number % 1 != 0) {
         //If number is a decimal
         message.reply("That is a decimal number, please enter a whole number. If the sport you're entering is timed, input the nearest whole minute.");
         return;
-    }
-    else if (number < 1) {
+    } else if (number < 1) {
         //If number is negative, reject it
         message.reply("Please dont enter negatives, this is >remove anyway.")
         return;
-    }
-    else {
+    } else {
         //CALCULATE THE SPORTS POINT TOTAL
         totalvalue = (sportvalue * number);
 

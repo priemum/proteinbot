@@ -12,8 +12,7 @@ exports.run = (client, message, args) => {
         message.reply(args[0] + "\'s total is " + score.points + " points. :muscle:")
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested " + member + " ( " + client.users.cache.get(member).username + ") 's total of " + score.points + ".");
         return;
-    } 
-    catch {
+    } catch {
         //Get requesters score
         let score = client.getScore.get(message.member.user.id)
         //Check if we already have an entry
