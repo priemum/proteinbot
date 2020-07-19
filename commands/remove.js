@@ -39,6 +39,14 @@ exports.run = (client, message, args) => {
         return;
     }
 
+    //Prepare the type of addition
+    if (sporttype == "UNITS") {
+        var unittype = "units";
+    }
+    else if (sporttype == "TIMED") {
+        var unittype = "minutes";
+    }
+
     //Check argument is a number
     if (isNaN(number)) {
         message.reply("\"" + args[0] + "\" is not a number. If the sport you're entering is timed, input the nearest whole minute.");
@@ -66,15 +74,7 @@ exports.run = (client, message, args) => {
         }
         //Write to database
         client.setScore.run(score);
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") removed " + number + " units of " + type + ", removing " + totalvalue + " points.");
-
-        //Prepare the type of addition
-        if (sporttype == "UNITS") {
-            var unittype = "units";
-        }
-        else if (sporttype == "TIMED") {
-            var unittype = "minutes";
-        }
+        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") removed " + number + " " + unittype + " of " + type + ", removing " + totalvalue + " points.");
 
         //Announce the removal
         message.reply("removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. What a shame. \nYour new all time points total is: " + score.points + " :cold_sweat:")

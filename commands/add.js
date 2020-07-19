@@ -41,6 +41,13 @@ exports.run = (client, message, args) => {
         return;
     }
 
+    //Prepare the type of addition
+    if (sporttype == "UNITS") {
+        var unittype = "units";
+    }
+    else if (sporttype == "TIMED") {
+        var unittype = "minutes";
+    }
 
     //Check argument is a number
     if (number == null) {
@@ -71,21 +78,13 @@ exports.run = (client, message, args) => {
         }
         //Write to database
         client.setScore.run(score);
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " units of " + type + ", totalling " + totalvalue + " points.");
+        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
 
         //Prepare the "motivation"
         if (number < 20) {
             selectedmotivation = coulddobetter[Math.floor(Math.random() * coulddobetter.length)]
         } else {
             selectedmotivation = positive[Math.floor(Math.random() * positive.length)]
-        }
-
-        //Prepare the type of addition
-        if (sporttype == "UNITS") {
-            var unittype = "units";
-        }
-        else if (sporttype == "TIMED") {
-            var unittype = "minutes";
         }
 
         //Announce the addition

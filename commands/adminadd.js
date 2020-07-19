@@ -25,6 +25,14 @@ exports.run = (client, message, args) => {
             return;
         }
         
+        //Prepare the type of addition
+        if (sporttype == "UNITS") {
+            var unittype = "units";
+        }
+        else if (sporttype == "TIMED") {
+            var unittype = "minutes";
+        }
+
         //Get mentioned user
         try {
             let member = message.mentions.members.first().id;
@@ -66,15 +74,7 @@ exports.run = (client, message, args) => {
                 }
                 //Write to database
                 client.setScore.run(score);
-                console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " units of " + type + ", totalling " + totalvalue + " points to " + member + " (" + client.users.cache.get(member).username + ").");
-
-                //Prepare the type of addition
-                if (sporttype == "UNITS") {
-                    var unittype = "units";
-                }
-                else if (sporttype == "TIMED") {
-                    var unittype = "minutes";
-                }
+                console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points to " + member + " (" + client.users.cache.get(member).username + ").");
 
                 //Announce the addition
                 message.reply("Administratively added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points to " + args[0] + ".\nNew all time points total is: " + score.points + " :muscle:")
