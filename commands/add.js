@@ -34,6 +34,7 @@ exports.run = (client, message, args) => {
         var jsonstring = JSON.stringify(pointscheme)
         var objectValue = JSON.parse(jsonstring);
         sportvalue = objectValue[`${type}`][0];
+        sporttype = objectValue[`${type}`][1];
     } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
@@ -79,8 +80,16 @@ exports.run = (client, message, args) => {
             selectedmotivation = positive[Math.floor(Math.random() * positive.length)]
         }
 
+        //Prepare the type of addition
+        if (sporttype == "UNITS") {
+            var unittype = "units";
+        }
+        else if (sporttype == "TIMED") {
+            var unittype = "minutes";
+        }
+
         //Announce the addition
-        message.reply("added " + number + " units of " + type + ", totalling " + totalvalue + " points. " + selectedmotivation + " \nYour new all time points total is: " + score.points + " :muscle:")
+        message.reply("added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. " + selectedmotivation + " \nYour new all time points total is: " + score.points + " :muscle:")
         return;
     }
 }
