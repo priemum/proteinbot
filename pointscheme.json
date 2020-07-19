@@ -1,0 +1,11 @@
+{
+    "pushups": ["1", "UNITS"],
+    "cycling": ["2", "TIMED"],
+    "running": ["2", "TIMED"],
+    "squats": ["1", "UNITS"],
+    "lunges": ["1", "UNITS"],
+    "crunches": ["2", "UNITS"],
+    "curls": ["1", "UNITS"],
+    "plank": ["2", "TIMED"],
+    "burpies": ["2", "UNITS"]
+}

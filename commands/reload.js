@@ -4,10 +4,10 @@ exports.run = (client, message, args) => {
   //Check if sender has the correct permissions to operate this command.
   if (config.admins.includes(message.member.user.id)) {
     //Check for command name.
-    if(!args || args.length < 1) return message.reply("Must provide a command name to reload.");
+    if (!args || args.length < 1) return message.reply("Must provide a command name to reload.");
     const commandName = args[0];
     //Check if the command exists and is valid.
-    if(!client.commands.has(commandName)) {
+    if (!client.commands.has(commandName)) {
       return message.reply("That command does not exist");
     }
     //Delete the command from the require cache.
@@ -21,8 +21,7 @@ exports.run = (client, message, args) => {
     //Signal reload completion.
     message.reply(`The command ${commandName} has been reloaded`);
     console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") reloaded command \"" + commandName + "\"");
-  }
-  else {
+  } else {
     //If insufficient permissions, reject the command.
     message.reply("Insufficient permissions for this command.")
   }

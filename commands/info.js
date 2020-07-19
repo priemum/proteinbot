@@ -1,54 +1,14 @@
-const Discord = require("discord.js");
+const config = require("../config.json");
+const pointscheme = require("../pointscheme.json");
 
 exports.run = (client, message, args) => {
-    try {
-        //See if a user was mentioned
-        let member = message.mentions.members.first().id;
-        //Get mentioned user score
-        let score = client.getScore.get(member);
-        if (score == null) {
-            message.reply("no record was found for this user.");
-            return;
-        }
-        
-        const username = client.users.cache.get(member).username;
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the info of " + member + " (" + client.users.cache.get(member).username + ").");
-        const embed = new Discord.MessageEmbed()
-            .setTitle("Info for " + username)
-            .setColor(0x00AE86)
-            .setTimestamp()
-            .setFooter('Protein')
-
-            .addField(`Number of pushups:`, `${score.points}`)
-            .addField(`Last pushups added at:`, `${score.lastSubmit}`)
-
-            return message.channel.send({embed});
-    } 
-    catch {
-        //Get requesters score
-        let score = client.getScore.get(message.member.user.id)
-        //Check if we already have an entry
-        //If we dont have an entry, initialize at 0.
-        if (!score) {
-            score = {
-                id: `${message.author.id}`,
-                points: 0,
-                lastSubmit: `${new Date()}`
-            }
-            //Write to database
-            client.setScore.run(score);
-        }
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their info.");
-        //Print requesters score
-        const embed = new Discord.MessageEmbed()
-        .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)
-        .setColor(0x00AE86)
-        .setTimestamp()
-        .setFooter('Protein')
-
-        .addField(`Number of pushups:`, `${score.points}`)
-        .addField(`Last pushups added at:`, `${score.lastSubmit}`)
-
-        return message.channel.send({embed});
-    }
-};
+    //get sports listed
+    var jsonstring = JSON.stringify(pointscheme)
+    var objectValue = JSON.parse(jsonstring);
+    var objectValuesIsolated = Object.keys(objectValue);
+    var objectValuesAsString = objectValuesIsolated.toString().split(",").join(", ");
+    
+    //print info
+    message.channel.send(":wave: Hi, I'm Protein!\n\nI keep track of your exercises and allow you to compete with others!\n\nTo add exercise to your profile, do:\n" + config.prefix + "add [sport] [amount in units or minutes if applicable]\n\nThe current supported sports are: " + objectValuesAsString + ".\n\nYou can also view your score with " + config.prefix + "profile and the leaderboard with " + config.prefix + "leaderboard.\nUse " + config.prefix + "commands to list all the other commands.");
+    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") ran the info command.");
+}

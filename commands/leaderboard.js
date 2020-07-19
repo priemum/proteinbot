@@ -9,15 +9,17 @@ exports.run = (client, message, args) => {
 
     //Print leaderboard embed
     const embed = new Discord.MessageEmbed()
-        .setTitle("Leaderboard")
+        .setTitle("All-time Leaderboard")
         .setColor(0x00AE86)
         .setTimestamp()
-	    .setFooter('Protein')
+        .setFooter('Protein')
 
-        for(const data of top10) {
-            const username = client.users.cache.get(data.id).username
-            embed.addField(`${username}`, `${data.points} pushups`);
-        }
+    for (const data of top10) {
+        const username = client.users.cache.get(data.id).username
+        embed.addField(`${username}`, `${data.points} points`);
+    }
 
-        return message.channel.send({embed});
+    return message.channel.send({
+        embed
+    });
 };
