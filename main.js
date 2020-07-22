@@ -38,6 +38,19 @@ function updateMonthlyDBMonth() {
     }
 }
 
+//Upon server program closure, close the database.
+process.on('exit', () => {
+  console.log("[" + (new Date()) + "] " + "Program termination request detected.");
+  console.log("[" + (new Date()) + "] " + "Closing databases safely...");
+  scoresDB.close();
+  bannedDB.close();
+  console.log("[" + (new Date()) + "] " + "Databases closed.");
+  console.log("[" + (new Date()) + "] " + "Proceeding to terminate program. Goodbye.");
+});
+process.on('SIGHUP', () => process.exit(128 + 1));
+process.on('SIGINT', () => process.exit(128 + 2));
+process.on('SIGTERM', () => process.exit(128 + 15));
+
 //When client is logged in and declared ready to discord server...
 client.on("ready", () => {
   //Declare successful connection to Discord.
