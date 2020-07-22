@@ -18,6 +18,15 @@ module.exports = (client, message) => {
   //If that command doesn't exist, ignore message.
   if (!cmd) return;
 
+  //Check if the user is banned, if so, inform the user if they are banned and ignore the message.
+  let banDBQuery = client.checkForBan.get(message.author.id);
+  if (banDBQuery) {
+    //User is banned...
+    message.reply("you are banned from using Protein. Sorry. :hammer:\nCommon ban reasons include abusing the points system or intentionally trying to break the bot.");
+    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") attempted to use the bot, but is banned.");
+    return;
+  }
+
   //Run the command.
   cmd.run(client, message, args);
 };
