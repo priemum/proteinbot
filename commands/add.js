@@ -13,20 +13,28 @@ exports.run = (client, message, args) => {
         return;
     }
     //Get current user score
-    let score = client.getScore.get(message.member.user.id);
+    let allTimeScore = client.getScore.get(message.member.user.id);
+    let monthlyScore = client.getMonthlyScore.get(message.member.user.id);
     //Load "motivation"
     var coulddobetter = ['Could do better...', 'Maybe push yourself more next time?', 'C\'mon!', 'Weirdchamp', 'I\'m still under development too...']
     var positive = ['Nice work.', 'Nailed it!', 'Keep it up!', 'Legendary!', 'Poggers!', 'Pogchamp.', 'Whoa!', 'Awesome!']
 
     //Check if we already have an entry
     //If we dont have an entry, initialize at 0.
-    if (!score) {
-        score = {
+    if (!allTimeScore) {
+        allTimeScore = {
             id: `${message.author.id}`,
             points: 0,
             lastSubmit: `${new Date()}`
         }
-        client.setScore.run(score);
+        client.setScore.run(allTimeScore);
+    }
+    if (!monthlyScore) {
+        monthlyScore = {
+            id: `${message.author.id}`,
+            points: 0
+        }
+        client.setMonthlyScore.run(monthlyScore);
     }
 
     //Check if sport is valid and get its point value if so
@@ -69,15 +77,21 @@ exports.run = (client, message, args) => {
 
         //Increment the points
         for (i = 0; i < totalvalue; i++) {
-            score.points++
+            allTimeScore.points++;
+            monthlyScore.points++;
         }
-        score = {
+        allTimeScore = {
             id: `${message.author.id}`,
-            points: score.points,
+            points: allTimeScore.points,
             lastSubmit: `${new Date()}`
         }
+        monthlyScore = {
+            id: `${message.author.id}`,
+            points: monthlyScore.points
+        }
         //Write to database
-        client.setScore.run(score);
+        client.setScore.run(allTimeScore);
+        client.setMonthlyScore.run(monthlyScore);
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
 
         //Prepare the "motivation"
@@ -88,7 +102,7 @@ exports.run = (client, message, args) => {
         }
 
         //Announce the addition
-        message.reply("added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. " + selectedmotivation + " \nYour new all time points total is: " + score.points + " :muscle:")
+        message.reply("added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. " + selectedmotivation + " \nYour points total this month is: " + monthlyScore.points + " :calendar_spiral:\nYour new all time points total is: " + allTimeScore.points + " :muscle:")
         return;
     }
 }
