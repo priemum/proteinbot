@@ -1,6 +1,6 @@
 /** 
  * Protein
- * Version 1.2.1
+ * Version 1.3.0
  * Discord bot to keep a tally of points for exercise with a leaderboard system and info system.
  * Currently planned is a monthly or weekly competition element.
  * By Steven Wheeler.
