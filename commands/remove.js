@@ -14,17 +14,25 @@ exports.run = (client, message, args) => {
     }
     //Get
     //Get current user score
-    let score = client.getScore.get(message.member.user.id);
+    let allTimeScore = client.getScore.get(message.member.user.id);
+    let monthlyScore = client.getMonthlyScore.get(message.member.user.id);
 
     //Check if we already have an entry
     //If we dont have an entry, initialize at 0.
-    if (!score) {
-        score = {
+    if (!allTimeScore) {
+        allTimeScore = {
             id: `${message.author.id}`,
             points: 0,
             lastSubmit: `${new Date()}`
         }
-        client.setScore.run(score);
+        client.setScore.run(allTimeScore);
+    }
+    if (!monthlyScore) {
+        monthlyScore = {
+            id: `${message.author.id}`,
+            points: 0
+        }
+        client.setMonthlyScore.run(monthlyScore);
     }
 
     //Check if sport is valid and get its point value if so
@@ -63,21 +71,33 @@ exports.run = (client, message, args) => {
         //CALCULATE THE SPORTS POINT TOTAL
         totalvalue = (sportvalue * number);
 
-        //Increment the points
         for (i = 0; i < totalvalue; i++) {
-            score.points--
+            allTimeScore.points--;
+            monthlyScore.points--;
         }
-        score = {
+        if (allTimeScore.points < 0) {
+            allTimeScore.points = 0;
+        }
+        if (monthlyScore.points < 0) {
+            monthlyScore.points = 0;
+        }
+        allTimeScore = {
             id: `${message.author.id}`,
-            points: score.points,
+            points: allTimeScore.points,
             lastSubmit: `${new Date()}`
         }
+        monthlyScore = {
+            id: `${message.author.id}`,
+            points: monthlyScore.points
+        }
+
         //Write to database
-        client.setScore.run(score);
+        client.setScore.run(allTimeScore);
+        client.setMonthlyScore.run(monthlyScore);
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") removed " + number + " " + unittype + " of " + type + ", removing " + totalvalue + " points.");
 
         //Announce the removal
-        message.reply("removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. What a shame. \nYour new all time points total is: " + score.points + " :cold_sweat:")
+        message.reply("removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. What a shame. \nYour points total this month is: " + monthlyScore.points + " :calendar_spiral: \nYour new all time points total is: " + allTimeScore.points + " :cold_sweat:")
         return;
     }
 }

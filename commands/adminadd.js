@@ -37,10 +37,22 @@ exports.run = (client, message, args) => {
         try {
             let member = message.mentions.members.first().id;
             //Get current user score
-            let score = client.getScore.get(member);
-            if (score == null) {
-                message.reply("no record was found for this user.");
-                return;
+            let allTimeScore = client.getScore.get(member);
+            let monthlyScore = client.getMonthlyScore.get(member);
+            if (!allTimeScore) {
+                allTimeScore = {
+                    id: `${member}`,
+                    points: 0,
+                    lastSubmit: `${new Date()}`
+                }
+                client.setScore.run(allTimeScore);
+            }
+            if (!monthlyScore) {
+                monthlyScore = {
+                    id: `${member}`,
+                    points: 0
+                }
+                client.setMonthlyScore.run(monthlyScore);
             }
             if (number == null) {
                 message.reply("please specify an amount of units to add.")
@@ -65,24 +77,30 @@ exports.run = (client, message, args) => {
 
                 //Increment the points
                 for (i = 0; i < totalvalue; i++) {
-                    score.points++
+                    allTimeScore.points++
+                    monthlyScore.points++
                 }
-                score = {
+                allTimeScore = {
                     id: `${member}`,
-                    points: score.points,
+                    points: allTimeScore.points,
                     lastSubmit: `${new Date()}`
                 }
+                monthlyScore = {
+                    id: `${member}`,
+                    points: monthlyScore.points,
+                }
                 //Write to database
-                client.setScore.run(score);
+                client.setScore.run(allTimeScore);
+                client.setMonthlyScore.run(monthlyScore);
                 console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points to " + member + " (" + client.users.cache.get(member).username + ").");
 
                 //Announce the addition
-                message.reply("Administratively added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points to " + args[0] + ".\nNew all time points total is: " + score.points + " :muscle:")
+                message.reply("Administratively added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points to " + args[0] + ".\nPoints total this month is: " + monthlyScore.points + " :calendar_spiral:\nNew all time points total is: " + allTimeScore.points + " :muscle:")
                 return;
             }
         } catch {
             //Check we have a usable mention
-            message.reply("please specify a user to add to.");
+            message.reply("please specify a valid user to add to.");
             return;
         }
     } else {
