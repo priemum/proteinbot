@@ -5,10 +5,23 @@ exports.run = (client, message, args) => {
         //See if a user was mentioned
         let member = message.mentions.members.first().id;
         //Get mentioned user score
-        let score = client.getScore.get(member);
-        if (score == null) {
-            message.reply("no record was found for this user.");
-            return;
+        let allTimeScore = client.getScore.get(member);
+        let monthlyScore = client.getMonthlyScore.get(member);
+        //If user is not in db, add record
+        if (!allTimeScore) {
+            allTimeScore = {
+                id: `${message.author.id}`,
+                points: 0,
+                lastSubmit: `${new Date()}`
+            }
+            client.setScore.run(allTimeScore);
+        }
+        if (!monthlyScore) {
+            monthlyScore = {
+                id: `${message.author.id}`,
+                points: 0
+            }
+            client.setMonthlyScore.run(monthlyScore);
         }
 
         const username = client.users.cache.get(member).username;
@@ -19,25 +32,33 @@ exports.run = (client, message, args) => {
             .setTimestamp()
             .setFooter('Protein')
 
-            .addField(`Total points:`, `${score.points}`)
-            .addField(`Last exercise added at:`, `${score.lastSubmit}`)
+            .addField(`Points earned this month:`, `${monthlyScore.points}`)
+            .addField(`Total points:`, `${allTimeScore.points}`)
+            .addField(`Last exercise added at:`, `${allTimeScore.lastSubmit}`)
 
         return message.channel.send({
             embed
         });
     } catch {
         //Get requesters score
-        let score = client.getScore.get(message.member.user.id)
+        let allTimeScore = client.getScore.get(message.member.user.id);
+        let monthlyScore = client.getMonthlyScore.get(message.member.user.id);
         //Check if we already have an entry
         //If we dont have an entry, initialize at 0.
-        if (!score) {
-            score = {
+        if (!allTimeScore) {
+            allTimeScore = {
                 id: `${message.author.id}`,
                 points: 0,
                 lastSubmit: `${new Date()}`
             }
-            //Write to database
-            client.setScore.run(score);
+            client.setScore.run(allTimeScore);
+        }
+        if (!monthlyScore) {
+            monthlyScore = {
+                id: `${message.author.id}`,
+                points: 0
+            }
+            client.setMonthlyScore.run(monthlyScore);
         }
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their info.");
         //Print requesters score
@@ -47,8 +68,9 @@ exports.run = (client, message, args) => {
             .setTimestamp()
             .setFooter('Protein')
 
-            .addField(`Total points:`, `${score.points}`)
-            .addField(`Last exercise added at:`, `${score.lastSubmit}`)
+            .addField(`Points earned this month:`, `${monthlyScore.points}`)
+            .addField(`Total points:`, `${allTimeScore.points}`)
+            .addField(`Last exercise added at:`, `${allTimeScore.lastSubmit}`)
 
         return message.channel.send({
             embed
