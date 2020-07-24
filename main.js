@@ -1,6 +1,6 @@
 /** 
  * Protein
- * Version 1.3.0
+ * Version 1.3.1
  * Discord bot to keep a tally of points for exercise with a leaderboard system and info system.
  * Currently planned is a monthly or weekly competition element.
  * By Steven Wheeler.
@@ -16,8 +16,9 @@ const fs = require("fs");
 const config = require("./config.json");
 const client = new Discord.Client();
 client.config = config;
-//Declare the database file.
-const sql = new SQLite('./scores.sqlite');
+//Declare the database files.
+const scoresDB = new SQLite('./scores.sqlite');
+const bannedDB = new SQLite('./bans.sqlite');
 
 //Function used later in code to update the monthly databases current month.
 function updateMonthlyDBMonth() {
@@ -37,6 +38,19 @@ function updateMonthlyDBMonth() {
     }
 }
 
+//Upon server program closure, close the database.
+process.on('exit', () => {
+  console.log("[" + (new Date()) + "] " + "Program termination request detected.");
+  console.log("[" + (new Date()) + "] " + "Closing databases safely...");
+  scoresDB.close();
+  bannedDB.close();
+  console.log("[" + (new Date()) + "] " + "Databases closed.");
+  console.log("[" + (new Date()) + "] " + "Proceeding to terminate program. Goodbye.");
+});
+process.on('SIGHUP', () => process.exit(128 + 1));
+process.on('SIGINT', () => process.exit(128 + 2));
+process.on('SIGTERM', () => process.exit(128 + 15));
+
 //When client is logged in and declared ready to discord server...
 client.on("ready", () => {
   //Declare successful connection to Discord.
@@ -47,25 +61,30 @@ client.on("ready", () => {
     console.log("[" + (new Date()) + "] " + "Points scheme was successfully found.");
   }
   //Declare start of DB preparation.
-  console.log("[" + (new Date()) + "] " + "Preparing SQL database...");
-  //If the table isn't there, create it and setup the database correctly.
-  sql.prepare("CREATE TABLE IF NOT EXISTS overallScores (id TEXT PRIMARY KEY, points INTEGER, lastSubmit DATE);").run();
-  sql.prepare("CREATE TABLE IF NOT EXISTS monthlyScores (id TEXT PRIMARY KEY, points INTEGER);").run();
+  console.log("[" + (new Date()) + "] " + "Preparing SQL databases...");
+  //If the table isn't there, create it and setup the databases correctly.
+  scoresDB.prepare("CREATE TABLE IF NOT EXISTS overallScores (id TEXT PRIMARY KEY, points INTEGER, lastSubmit DATE);").run();
+  scoresDB.prepare("CREATE TABLE IF NOT EXISTS monthlyScores (id TEXT PRIMARY KEY, points INTEGER);").run();
+  bannedDB.prepare("CREATE TABLE IF NOT EXISTS bannedIDs (id TEXT PRIMARY KEY, banDate DATE);").run();
   //Ensure that the "id" row is always unique and indexed.
-  sql.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_overallScores_id ON overallScores (id);").run();
-  sql.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_monthlyScores_id ON monthlyScores (id);").run();
-  //Apply options to database.
-  sql.pragma("synchronous = 1");
-  sql.pragma("journal_mode = wal");
+  scoresDB.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_overallScores_id ON overallScores (id);").run();
+  scoresDB.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_monthlyScores_id ON monthlyScores (id);").run();
+  bannedDB.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_bannedIDs_id ON bannedIDs (id);").run();
+  //Apply options to scores database.
+  scoresDB.pragma("synchronous = 1");
+  scoresDB.pragma("journal_mode = wal");
   //Prepare SQL statements.
-  client.getScore = sql.prepare("SELECT * FROM overallScores WHERE id = ?");
-  client.setScore = sql.prepare("INSERT OR REPLACE INTO overallScores (id, points, lastSubmit) VALUES (@id, @points, @lastSubmit);");
-  client.getMonthlyScore = sql.prepare("SELECT * FROM monthlyScores WHERE id = ?");
-  client.setMonthlyScore = sql.prepare("INSERT OR REPLACE INTO monthlyScores (id, points) VALUES (@id, @points);");
+  client.getScore = scoresDB.prepare("SELECT * FROM overallScores WHERE id = ?");
+  client.setScore = scoresDB.prepare("INSERT OR REPLACE INTO overallScores (id, points, lastSubmit) VALUES (@id, @points, @lastSubmit);");
+  client.getMonthlyScore = scoresDB.prepare("SELECT * FROM monthlyScores WHERE id = ?");
+  client.setMonthlyScore = scoresDB.prepare("INSERT OR REPLACE INTO monthlyScores (id, points) VALUES (@id, @points);");
+  client.checkForBan = bannedDB.prepare("SELECT * FROM bannedIDs WHERE id = ?");
+  client.banUser = bannedDB.prepare("INSERT OR REPLACE INTO bannedIDs (id, banDate) VALUES (@id, @banDate);");
+  client.unbanUser = bannedDB.prepare("DELETE FROM bannedIDs WHERE id = ?");
   //Check if monthlyScores has the month entry, else add it.
   updateMonthlyDBMonth();
   //Declare boot complete.
-  console.log("[" + (new Date()) + "] " + "SQL database prepared.");
+  console.log("[" + (new Date()) + "] " + "SQL databases prepared.");
   console.log("[" + (new Date()) + "] " + "Boot sequence complete.");
 });
 
@@ -121,10 +140,10 @@ function checkForEndOfMonth() {
     //Month has changed.
     console.log("[" + (new Date()) + "] " + "The monthly leaderboard has now expired. resetting for the next month...");
     //Drop the old monthly table.
-    sql.prepare("DROP TABLE monthlyScores;").run();
+    scoresDB.prepare("DROP TABLE monthlyScores;").run();
     //Create the new monthly table.
-    sql.prepare("CREATE TABLE monthlyScores (id TEXT PRIMARY KEY, points INTEGER);").run();
-    sql.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_monthlyScores_id ON monthlyScores (id);").run();
+    scoresDB.prepare("CREATE TABLE monthlyScores (id TEXT PRIMARY KEY, points INTEGER);").run();
+    scoresDB.prepare("CREATE UNIQUE INDEX IF NOT EXISTS idx_monthlyScores_id ON monthlyScores (id);").run();
     //Update the tables month info.
     updateMonthlyDBMonth();
     //Declare monthly update complete.
