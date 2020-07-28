@@ -24,12 +24,11 @@ exports.run = (client, message, args) => {
             message.reply(`${type}` + " is not a valid or supported sport.");
             return;
         }
-        
+
         //Prepare the type of addition
         if (sporttype == "UNITS") {
             var unittype = "units";
-        }
-        else if (sporttype == "TIMED") {
+        } else if (sporttype == "TIMED") {
             var unittype = "minutes";
         }
 

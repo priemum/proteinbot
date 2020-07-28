@@ -23,19 +23,19 @@ const bannedDB = new SQLite('./bans.sqlite');
 //Function used later in code to update the monthly databases current month.
 function updateMonthlyDBMonth() {
   let output = client.getMonthlyScore.get(`MONTH`);
-    //Get date info from OS...
-    var date = new Date();
-    //Split into month with preceeding 0...
-    var month = ("0" + (date.getMonth() + 1)).slice(-2);  
-    //Prepare database entry...
-    if (!output) {
-      input = {
-          id: `MONTH`,
-          points: month,
-      }
-      //Send to database...
-      client.setMonthlyScore.run(input);
+  //Get date info from OS...
+  var date = new Date();
+  //Split into month with preceeding 0...
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  //Prepare database entry...
+  if (!output) {
+    input = {
+      id: `MONTH`,
+      points: month,
     }
+    //Send to database...
+    client.setMonthlyScore.run(input);
+  }
 }
 
 //Upon server program closure, close the database.
@@ -154,7 +154,7 @@ function checkForEndOfMonth() {
   }
 }
 //Run the checkForEndOfMonth function every second.
-setInterval(checkForEndOfMonth, 1*1000);
+setInterval(checkForEndOfMonth, 1 * 1000);
 
 //Begin login to discord.
 console.log("[" + (new Date()) + "] " + "Logging into discord...");
