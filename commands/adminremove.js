@@ -28,8 +28,7 @@ exports.run = (client, message, args) => {
         //Prepare the type of addition
         if (sporttype == "UNITS") {
             var unittype = "units";
-        }
-        else if (sporttype == "TIMED") {
+        } else if (sporttype == "TIMED") {
             var unittype = "minutes";
         }
 

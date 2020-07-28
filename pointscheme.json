@@ -1,5 +1,6 @@
 {
     "pushups": ["1", "UNITS"],
+    "situps": ["1", "UNITS"],
     "cycling": ["2", "TIMED"],
     "running": ["2", "TIMED"],
     "squats": ["1", "UNITS"],

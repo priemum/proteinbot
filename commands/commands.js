@@ -23,5 +23,5 @@ exports.run = (client, message, args) => {
         //print info
         message.reply(":desktop: Commands: " + objectValuesAsString + ".");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") listed the commands.");
-    });    
+    });
 }

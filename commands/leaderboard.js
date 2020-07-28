@@ -12,12 +12,11 @@ exports.run = (client, message, args) => {
     if (argument != null && argument.toLowerCase() == "all") {
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the all time leaderboard.");
         allTimeLeaderboard();
-    }
-    else {
+    } else {
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the monthly leaderboard.");
         monthlyLeaderboard();
     }
-    
+
     //Monthly leaderboard function.
     function monthlyLeaderboard() {
         var date = new Date();

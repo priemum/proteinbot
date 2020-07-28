@@ -16,7 +16,7 @@ exports.run = (client, message, args) => {
 
     //Append the time and date, as well as the suggester.
     var suggestionForStorage = ("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + "): " + finalsuggestion);
-    
+
     //Store the suggestion
     fs.appendFile("./suggestions.txt", suggestionForStorage + os.EOL, function (err) {
         if (err) throw err;
