@@ -137,8 +137,24 @@ function checkForEndOfMonth() {
   var dbMonth = ("0" + (output.points)).slice(-2);
   //Check if month has changed.
   if (month != dbMonth) {
-    //Month has changed.
+    //Month has changed...
     console.log("[" + (new Date()) + "] " + "The monthly leaderboard has now expired. resetting for the next month...");
+    //Retrieve top 3 of last month.
+    const lastMonthWinners = scoresDB.prepare("SELECT * FROM monthlyScores WHERE ID != 'MONTH' ORDER BY points DESC LIMIT 3;").all();
+    //Print the suitable results to log depending on how many positions of the podium were filled.
+    if (lastMonthWinners[0] === undefined) {
+      //No winners...
+      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: No winner.\n[Cont.] 2nd: No winner.\n[Cont.] 3rd: No winner.");
+    } else if (lastMonthWinners[1] === undefined) {
+      //First place only...
+      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: No winner.\n[Cont.] 3rd: No winner.");
+    } else if (lastMonthWinners[2] === undefined) {
+      //First and second place only...
+      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: " + lastMonthWinners[1].id + " (" + client.users.cache.get(lastMonthWinners[1].id).username + ") with " + lastMonthWinners[1].points + " points.\n[Cont.] 3rd: No winner.");
+    } else {
+      //First, second and third place filled...
+      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: " + lastMonthWinners[1].id + " (" + client.users.cache.get(lastMonthWinners[1].id).username + ") with " + lastMonthWinners[1].points + " points.\n[Cont.] 3rd: " + lastMonthWinners[2].id + " (" + client.users.cache.get(lastMonthWinners[2].id).username + ") with " + lastMonthWinners[2].points + " points.");
+    }
     //Drop the old monthly table.
     scoresDB.prepare("DROP TABLE monthlyScores;").run();
     //Create the new monthly table.
