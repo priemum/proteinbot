@@ -1,10 +1,13 @@
 /** 
  * Protein
  * Version 1.3.3
- * Discord bot to keep a tally of points for exercise with a leaderboard system and info system.
- * Currently planned is a monthly or weekly competition element.
+ * Discord bot to keep track of exercise and provide points, with a monthly and all time leaderboard system and info system.
  * By Steven Wheeler.
- */
+ * 
+ * Github: www.github.com/robotprobot/proteinbot
+ * Twitter: @robot_probot
+ * Discord: robotprobot#8211
+ **/
 
 //Load required libraries.
 const Discord = require("discord.js");
