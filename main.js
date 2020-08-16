@@ -14,10 +14,10 @@ const Discord = require("discord.js");
 const Enmap = require("enmap");
 const SQLite = require("better-sqlite3");
 const fs = require("fs");
-const buildinfo = require("./buildinfo.json");
 
 //Load config and declare a new client.
 const config = require("./config.json");
+const buildinfo = require("./buildinfo.json");
 const client = new Discord.Client();
 client.config = config;
 //Declare the database files.
