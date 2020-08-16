@@ -14,6 +14,7 @@ const Discord = require("discord.js");
 const Enmap = require("enmap");
 const SQLite = require("better-sqlite3");
 const fs = require("fs");
+const buildinfo = require("./buildinfo.json");
 
 //Load config and declare a new client.
 const config = require("./config.json");
@@ -237,5 +238,7 @@ function checkForEndOfMonth() {
 setInterval(checkForEndOfMonth, 1 * 1000);
 
 //Begin login to discord.
+console.log("[" + (new Date()) + "] " + "Initializing Protein v" + buildinfo.softwareVersion + ".");
+console.log("[" + (new Date()) + "] " + "Starting boot sequence.");
 console.log("[" + (new Date()) + "] " + "Logging into discord...");
 client.login(config.token);

@@ -10,7 +10,7 @@ exports.run = (client, message, args) => {
         }
         //Print mentioned users score
         message.reply(args[0] + "\'s total is " + score.points + " points. :muscle:")
-        message.reply("Please note, the 'total' command is depreciated and will be removed in the future. Please use the 'profile' command instead.");
+        message.reply("***please note, the 'total' command is depreciated and will be removed in the future. Please use the 'profile' command instead.***");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested " + member + " ( " + client.users.cache.get(member).username + ") 's total of " + score.points + ".");
         return;
     } catch {
@@ -29,7 +29,7 @@ exports.run = (client, message, args) => {
         }
         //Print requesters score
         message.reply("your total is " + score.points + " points. :muscle:")
-        message.reply("Please note, the 'total' command is depreciated and will be removed in the future. Please use the 'profile' command instead.");
+        message.reply("***please note, the 'total' command is depreciated and will be removed in the future. Please use the 'profile' command instead.***");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their total of " + score.points + ".");
         return;
     }
