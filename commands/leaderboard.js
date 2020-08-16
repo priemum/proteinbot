@@ -6,7 +6,7 @@ const sql = new SQLite('./scores.sqlite');
 exports.run = (client, message, args) => {
     //Query database for results of leaderboards.
     const top10OfAllTime = sql.prepare("SELECT * FROM overallScores ORDER BY points DESC LIMIT 10;").all();
-    const top10OfMonth = sql.prepare("SELECT * FROM monthlyScores WHERE ID != 'MONTH' ORDER BY points DESC LIMIT 10;").all();
+    const top10OfMonth = sql.prepare("SELECT * FROM monthScores WHERE ID != 'MONTH' ORDER BY points DESC LIMIT 10;").all();
     //Figure out if user wants monthly leaderboard or all time leaderboard.
     var argument = args[0];
     if (argument != null && argument.toLowerCase() == "all") {
