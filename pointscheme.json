@@ -1,12 +1,31 @@
 {
-    "pushups": ["1", "UNITS"],
-    "situps": ["1", "UNITS"],
-    "cycling": ["2", "TIMED"],
-    "running": ["2", "TIMED"],
-    "squats": ["1", "UNITS"],
-    "lunges": ["1", "UNITS"],
-    "crunches": ["2", "UNITS"],
-    "curls": ["1", "UNITS"],
-    "plank": ["2", "TIMED"],
-    "burpies": ["2", "UNITS"]
+    "pushups": ["SHOWN", "PUSHUPS", "1", "UNITS"],
+    "pushup": ["ALTERNATIVE", "PUSHUPS", "1", "UNITS"],
+
+    "situps": ["SHOWN", "SITUPS", "1", "UNITS"],
+    "situp": ["ALTERNATIVE", "SITUPS", "1", "UNITS"],
+
+    "cycling": ["SHOWN", "CYCLING", "2", "TIMED"],
+
+    "running": ["SHOWN", "RUNNING", "2", "TIMED"],
+
+    "squats": ["SHOWN", "SQUATS", "1", "UNITS"],
+    "squat": ["ALTERNATIVE", "SQUATS", "1", "UNITS"],
+
+    "lunges": ["SHOWN", "LUNGES", "1", "UNITS"],
+    "lunge": ["ALTERNATIVE", "LUNGES", "1", "UNITS"],
+
+    "crunches": ["SHOWN", "CRUNCHES", "2", "UNITS"],
+    "crunch": ["ALTERNATIVE", "CRUNCHES", "2", "UNITS"],
+
+    "curls": ["SHOWN", "CURLS", "1", "UNITS"],
+    "curl": ["ALTERNATIVE", "CURLS", "1", "UNITS"],
+
+    "plank": ["SHOWN", "PLANK", "2", "TIMED"],
+
+    "burpies": ["SHOWN", "BURPIES", "2", "UNITS"],
+    "burpie": ["ALTERNATIVE", "BURPIES", "2", "UNITS"],
+    "burpee": ["ALTERNATIVE", "BURPIES", "2", "UNITS"],
+    "burpy": ["ALTERNATIVE", "BURPIES", "2", "UNITS"],
+    "burp": ["ALTERNATIVE", "BURPIES", "2", "UNITS"]
 }

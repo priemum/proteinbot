@@ -1,6 +1,6 @@
 /** 
  * Protein
- * Version 1.3.3
+ * Version 1.3.4
  * Discord bot to keep track of exercise and provide points, with a monthly and all time leaderboard system and info system.
  * By Steven Wheeler.
  * 

@@ -1,4 +1,4 @@
 {
-    "softwareVersion": "1.3.3",
-    "changelog": ["New command: Help","New command: Version","New sport: Situps","Optimisation on client and database"]
+    "softwareVersion": "1.3.4",
+    "changelog": ["New command: Help","New command: Version","New sport: Situps","Bot now supports non-plural sports: for example pushups can be entered as pushup; or crunches can be entered as crunch","Optimisation on client and database"]
 }
