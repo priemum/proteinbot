@@ -41,8 +41,8 @@ exports.run = (client, message, args) => {
     if (`${type}` in pointscheme) {
         var jsonstring = JSON.stringify(pointscheme)
         var objectValue = JSON.parse(jsonstring);
-        sportvalue = objectValue[`${type}`][0];
-        sporttype = objectValue[`${type}`][1];
+        sportvalue = objectValue[`${type}`][2];
+        sporttype = objectValue[`${type}`][3];
     } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
@@ -91,6 +91,7 @@ exports.run = (client, message, args) => {
         //Write to database
         client.setScore.run(allTimeScore);
         client.setMonthlyScore.run(monthlyScore);
+
         console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
 
         //Prepare the "motivation"

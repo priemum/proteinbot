@@ -18,8 +18,8 @@ exports.run = (client, message, args) => {
         if (`${type}` in pointscheme) {
             var jsonstring = JSON.stringify(pointscheme)
             var objectValue = JSON.parse(jsonstring);
-            sportvalue = objectValue[`${type}`][0];
-            sporttype = objectValue[`${type}`][1];
+            sportvalue = objectValue[`${type}`][2];
+            sporttype = objectValue[`${type}`][3];
         } else {
             message.reply(`${type}` + " is not a valid or supported sport.");
             return;

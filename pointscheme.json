@@ -1,12 +1,42 @@
 {
-    "pushups": ["1", "UNITS"],
-    "situps": ["1", "UNITS"],
-    "cycling": ["2", "TIMED"],
-    "running": ["2", "TIMED"],
-    "squats": ["1", "UNITS"],
-    "lunges": ["1", "UNITS"],
-    "crunches": ["2", "UNITS"],
-    "curls": ["1", "UNITS"],
-    "plank": ["2", "TIMED"],
-    "burpies": ["2", "UNITS"]
+    "pushups": ["SHOWN", "PUSHUPS", "1", "UNITS"],
+    "pushup": ["ALTERNATIVE", "PUSHUPS", "1", "UNITS"],
+
+    "situps": ["SHOWN", "SITUPS", "2", "UNITS"],
+    "situp": ["ALTERNATIVE", "SITUPS", "2", "UNITS"],
+
+    "cycling": ["SHOWN", "CYCLING", "10", "TIMED"],
+
+    "running": ["SHOWN", "RUNNING", "5", "TIMED"],
+
+    "squats": ["SHOWN", "SQUATS", "2", "UNITS"],
+    "squat": ["ALTERNATIVE", "SQUATS", "2", "UNITS"],
+
+    "lunges": ["SHOWN", "LUNGES", "2", "UNITS"],
+    "lunge": ["ALTERNATIVE", "LUNGES", "2", "UNITS"],
+
+    "crunches": ["SHOWN", "CRUNCHES", "3", "UNITS"],
+    "crunch": ["ALTERNATIVE", "CRUNCHES", "3", "UNITS"],
+
+    "curls": ["SHOWN", "CURLS", "3", "UNITS"],
+    "curl": ["ALTERNATIVE", "CURLS", "3", "UNITS"],
+
+    "plank": ["SHOWN", "PLANK", "20", "TIMED"],
+
+    "burpies": ["SHOWN", "BURPIES", "3", "UNITS"],
+    "burpie": ["ALTERNATIVE", "BURPIES", "3", "UNITS"],
+    "burpee": ["ALTERNATIVE", "BURPIES", "3", "UNITS"],
+    "burpy": ["ALTERNATIVE", "BURPIES", "3", "UNITS"],
+    "burp": ["ALTERNATIVE", "BURPIES", "3", "UNITS"],
+
+    "beatsaber-easy": ["SHOWN", "BEATSABER-EASY", "2", "UNITS"],
+    "beatsabereasy": ["ALTERNATIVE", "BEATSABER-EASY", "2", "UNITS"],
+    "beatsaber-normal": ["SHOWN", "BEATSABER-NORMAL", "4", "UNITS"],
+    "beatsabernormal": ["ALTERNATIVE", "BEATSABER-NORMAL", "4", "UNITS"],
+    "beatsaber-hard": ["SHOWN", "BEATSABER-HARD", "6", "UNITS"],
+    "beatsaberhard": ["ALTERNATIVE", "BEATSABER-HARD", "6", "UNITS"],
+    "beatsaber-expert": ["SHOWN", "BEATSABER-EXPERT", "8", "UNITS"],
+    "beatsaberexpert": ["ALTERNATIVE", "BEATSABER-EXPERT", "8", "UNITS"],
+    "beatsaber-expert+": ["SHOWN", "BEATSABER-EXPERT+", "10", "UNITS"],
+    "beatsaberexpert+": ["ALTERNATIVE", "BEATSABER-EXPERT+", "10", "UNITS"]
 }
