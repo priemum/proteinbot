@@ -12,14 +12,14 @@
     "squats": ["SHOWN", "SQUATS", "1", "UNITS"],
     "squat": ["ALTERNATIVE", "SQUATS", "1", "UNITS"],
 
-    "lunges": ["SHOWN", "LUNGES", "2", "UNITS"],
-    "lunge": ["ALTERNATIVE", "LUNGES", "2", "UNITS"],
+    "lunges": ["SHOWN", "LUNGES", "1", "UNITS"],
+    "lunge": ["ALTERNATIVE", "LUNGES", "1", "UNITS"],
 
-    "crunches": ["SHOWN", "CRUNCHES", "3", "UNITS"],
-    "crunch": ["ALTERNATIVE", "CRUNCHES", "3", "UNITS"],
+    "crunches": ["SHOWN", "CRUNCHES", "2", "UNITS"],
+    "crunch": ["ALTERNATIVE", "CRUNCHES", "32", "UNITS"],
 
-    "curls": ["SHOWN", "CURLS", "3", "UNITS"],
-    "curl": ["ALTERNATIVE", "CURLS", "3", "UNITS"],
+    "curls": ["SHOWN", "CURLS", "2", "UNITS"],
+    "curl": ["ALTERNATIVE", "CURLS", "2", "UNITS"],
 
     "plank": ["SHOWN", "PLANK", "20", "TIMED"],
 
