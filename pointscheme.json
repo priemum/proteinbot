@@ -16,7 +16,7 @@
     "lunge": ["ALTERNATIVE", "LUNGES", "1", "UNITS"],
 
     "crunches": ["SHOWN", "CRUNCHES", "2", "UNITS"],
-    "crunch": ["ALTERNATIVE", "CRUNCHES", "32", "UNITS"],
+    "crunch": ["ALTERNATIVE", "CRUNCHES", "2", "UNITS"],
 
     "curls": ["SHOWN", "CURLS", "2", "UNITS"],
     "curl": ["ALTERNATIVE", "CURLS", "2", "UNITS"],
