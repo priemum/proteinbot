@@ -1,6 +1,6 @@
 {
-    "pushups": ["SHOWN", "PUSHUPS", "1", "UNITS"],
-    "pushup": ["ALTERNATIVE", "PUSHUPS", "1", "UNITS"],
+    "pushups": ["SHOWN", "PUSHUPS", "2", "UNITS"],
+    "pushup": ["ALTERNATIVE", "PUSHUPS", "2", "UNITS"],
 
     "situps": ["SHOWN", "SITUPS", "2", "UNITS"],
     "situp": ["ALTERNATIVE", "SITUPS", "2", "UNITS"],
@@ -9,8 +9,8 @@
 
     "running": ["SHOWN", "RUNNING", "5", "TIMED"],
 
-    "squats": ["SHOWN", "SQUATS", "2", "UNITS"],
-    "squat": ["ALTERNATIVE", "SQUATS", "2", "UNITS"],
+    "squats": ["SHOWN", "SQUATS", "1", "UNITS"],
+    "squat": ["ALTERNATIVE", "SQUATS", "1", "UNITS"],
 
     "lunges": ["SHOWN", "LUNGES", "2", "UNITS"],
     "lunge": ["ALTERNATIVE", "LUNGES", "2", "UNITS"],
