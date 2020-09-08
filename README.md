@@ -4,9 +4,11 @@ Users can add the type of exercise they completed, how many times they did the e
 The system also has a monthly leaderboard and all time leaderboard to allow users to compete to each other.
 
 ### Dependencies:
-Discord.js >= 0.1.6
-Enmap >= 5.7.1
-Better-sqlite3 >= 7.1.0
+Name | Version
+--------------
+Discord.js | >= 0.1.6
+Enmap | >= 5.7.1
+Better-sqlite3 | >= 7.1.0
 _Above versions are the earliest tested; wherever possible, please install the latest versions._
 
 ### Features:
