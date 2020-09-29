@@ -1,6 +1,7 @@
 exports.run = (client, message, args) => {
     //Get updated point scheme
     const pointscheme = require("../pointscheme.json");
+    const userLookup = require("../userLookup.js")
     //Get user id.
     let user = message.member.user.id;
     //Get arguments
@@ -45,7 +46,7 @@ exports.run = (client, message, args) => {
         sporttype = objectValue[`${type}`][3];
     } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
+        console.log("[" + (new Date()) + "] " + message.author.id + " (" + userLookup(client, message.author.id) + ") requested an invalid sport of " + type + ".");
         return;
     }
 
@@ -92,7 +93,11 @@ exports.run = (client, message, args) => {
         client.setScore.run(allTimeScore);
         client.setMonthlyScore.run(monthlyScore);
 
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
+        async function printinfo() {
+            let username = await userLookup(client,message.author.id);
+            console.log("[" + (new Date()) + "] " + message.author.id + " (" + username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
+        }
+        printinfo();
 
         //Prepare the "motivation"
         if (number < 20) {
