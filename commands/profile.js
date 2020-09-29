@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const logPrinter = require("../logPrinter.js");
+const userLookup = require("../userLookup.js");
 
 exports.run = (client, message, args) => {
     try {
@@ -25,9 +26,10 @@ exports.run = (client, message, args) => {
             client.setMonthlyScore.run(monthlyScore);
         }
 
-        const username = client.users.cache.get(member).username;
         logPrinter.printUserRequestedOtherProfile(client, message.author.id, member);
-        const embed = new Discord.MessageEmbed()
+        async function printOthersInfo() {
+            let username = await userLookup(client, member);
+            const embed = new Discord.MessageEmbed()
             .setTitle("Info for " + username)
             .setColor(0x00AE86)
             .setTimestamp()
@@ -37,9 +39,12 @@ exports.run = (client, message, args) => {
             .addField(`Total points:`, `${allTimeScore.points}`)
             .addField(`Last exercise added at:`, `${allTimeScore.lastSubmit}`)
 
-        return message.channel.send({
-            embed
-        });
+            return message.channel.send({
+                embed
+            });
+        }
+        printOthersInfo();
+
     } catch {
         //Get requesters score
         let allTimeScore = client.getScore.get(message.member.user.id);
@@ -63,18 +68,22 @@ exports.run = (client, message, args) => {
         }
         logPrinter.printUserRequestedSelfProfile(client, message.author.id);
         //Print requesters score
-        const embed = new Discord.MessageEmbed()
-            .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)
-            .setColor(0x00AE86)
-            .setTimestamp()
-            .setFooter('Protein')
+        async function printOwnInfo() {
+            let username = await userLookup(client, message.author.id);
+            const embed = new Discord.MessageEmbed()
+                .setTitle("Info for " + username)
+                .setColor(0x00AE86)
+                .setTimestamp()
+                .setFooter('Protein')
 
-            .addField(`Points earned this month:`, `${monthlyScore.points}`)
-            .addField(`Total points:`, `${allTimeScore.points}`)
-            .addField(`Last exercise added at:`, `${allTimeScore.lastSubmit}`)
+                .addField(`Points earned this month:`, `${monthlyScore.points}`)
+                .addField(`Total points:`, `${allTimeScore.points}`)
+                .addField(`Last exercise added at:`, `${allTimeScore.lastSubmit}`)
 
-        return message.channel.send({
-            embed
-        });
+            return message.channel.send({
+                embed
+            });
+        }
+        printOwnInfo();
     }
 };
