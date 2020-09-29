@@ -1,4 +1,4 @@
 {
-    "softwareVersion": "1.3.5",
-    "changelog": [""]
+    "softwareVersion": "1.4.0",
+    "changelog": ["Updated method for obtaining and displaying username information"]
 }

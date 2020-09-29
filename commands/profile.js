@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     try {
@@ -25,7 +26,7 @@ exports.run = (client, message, args) => {
         }
 
         const username = client.users.cache.get(member).username;
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the info of " + member + " (" + client.users.cache.get(member).username + ").");
+        logPrinter.printUserRequestedOtherProfile(client, message.author.id, member);
         const embed = new Discord.MessageEmbed()
             .setTitle("Info for " + username)
             .setColor(0x00AE86)
@@ -60,7 +61,7 @@ exports.run = (client, message, args) => {
             }
             client.setMonthlyScore.run(monthlyScore);
         }
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested their info.");
+        logPrinter.printUserRequestedSelfProfile(client, message.author.id);
         //Print requesters score
         const embed = new Discord.MessageEmbed()
             .setTitle("Info for " + client.users.cache.get(message.member.user.id).username)

@@ -1,6 +1,5 @@
-const config = require("../config.json");
-const pointscheme = require("../pointscheme.json");
 const fs = require("fs");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     //initalise array to hold commands list
@@ -22,6 +21,6 @@ exports.run = (client, message, args) => {
 
         //print info
         message.reply(":desktop: Commands: " + objectValuesAsString + ".");
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") listed the commands.");
+        logPrinter.printUserListedCommands(client, message.author.id);
     });
 }

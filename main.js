@@ -15,6 +15,10 @@ const Enmap = require("enmap");
 const SQLite = require("better-sqlite3");
 const fs = require("fs");
 
+//Load required modules.
+const userLookup = require("./userLookup.js"); //User lookup is not used directly here, but is marked as required to ensure the program doesnt boot and crashes later when its called.
+const logPrinter = require("./logPrinter.js"); 
+
 //Load config and declare a new client.
 const config = require("./config.json");
 const buildinfo = require("./buildinfo.json");
@@ -208,15 +212,15 @@ function checkForEndOfMonth() {
     } else if (lastMonthWinners[1] === undefined) {
       //First place only...
       monthWinners = 1;
-      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: No winner.\n[Cont.] 3rd: No winner.");
+      logPrinter.printMonthlyWinners_OneWinner(client, lastMonthWinners);
     } else if (lastMonthWinners[2] === undefined) {
       //First and second place only...
       monthWinners = 2;
-      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: " + lastMonthWinners[1].id + " (" + client.users.cache.get(lastMonthWinners[1].id).username + ") with " + lastMonthWinners[1].points + " points.\n[Cont.] 3rd: No winner.");
+      logPrinter.printMonthlyWinners_TwoWinners(client, lastMonthWinners);
     } else {
       //First, second and third place filled...
       monthWinners = 3;
-      console.log("[" + (new Date()) + "] " + "Last months podium:\n[Cont.] 1st: " + lastMonthWinners[0].id + " (" + client.users.cache.get(lastMonthWinners[0].id).username + ") with " + lastMonthWinners[0].points + " points.\n[Cont.] 2nd: " + lastMonthWinners[1].id + " (" + client.users.cache.get(lastMonthWinners[1].id).username + ") with " + lastMonthWinners[1].points + " points.\n[Cont.] 3rd: " + lastMonthWinners[2].id + " (" + client.users.cache.get(lastMonthWinners[2].id).username + ") with " + lastMonthWinners[2].points + " points.");
+      logPrinter.printMonthlyWinners_ThreeWinners(client, lastMonthWinners);
     }
     //Send the top 3 into the long term results storage
     storeMonthlyResults(monthWinners, lastMonthWinners[0], lastMonthWinners[1], lastMonthWinners[2]);

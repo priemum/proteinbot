@@ -1,4 +1,5 @@
 const buildinfo = require("../buildinfo.json");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     //get build info
@@ -15,5 +16,5 @@ exports.run = (client, message, args) => {
     }
 
     //log the use of the command
-    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") ran the version command.");
+    logPrinter.printUserRequestedVersion(client, message.author.id);
 }

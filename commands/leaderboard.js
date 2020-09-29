@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const SQLite = require("better-sqlite3");
 const config = require("../config.json")
+const logPrinter = require("../logPrinter.js");
 const sql = new SQLite('./scores.sqlite');
 
 exports.run = (client, message, args) => {
@@ -10,10 +11,10 @@ exports.run = (client, message, args) => {
     //Figure out if user wants monthly leaderboard or all time leaderboard.
     var argument = args[0];
     if (argument != null && argument.toLowerCase() == "all") {
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the all time leaderboard.");
+        logPrinter.printUserRequestedAllTimeLeaderboard(client, message.author.id);
         allTimeLeaderboard();
     } else {
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") requested the monthly leaderboard.");
+        logPrinter.printUserRequestedMonthlyLeaderboard(client, message.author.id);
         monthlyLeaderboard();
     }
 

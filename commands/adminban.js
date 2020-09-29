@@ -1,4 +1,5 @@
 const config = require("../config.json");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     if (config.admins.includes(message.member.user.id)) {
@@ -15,11 +16,11 @@ exports.run = (client, message, args) => {
                 }
                 client.banUser.run(banDBQuery);
                 //Declare banning complete.
-                message.reply("successfully banned " + client.users.cache.get(member).username + ".");
-                console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively banned " + member + " (" + client.users.cache.get(member).username + ").");
+                message.reply("successfully banned " + args[0] + ".");
+                logPrinter.printAdminBannedUser(client, message.author.id, member);
             } else {
                 //Person already banned
-                message.reply(client.users.cache.get(member).username + " is already banned.");
+                message.reply(args[0] + " is already banned.");
             }
         } catch {
             //Declare an error.
