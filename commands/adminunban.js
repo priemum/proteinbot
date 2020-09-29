@@ -1,4 +1,5 @@
 const config = require("../config.json");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     if (config.admins.includes(message.member.user.id)) {
@@ -13,8 +14,8 @@ exports.run = (client, message, args) => {
             } else {
                 //Unban the person
                 client.unbanUser.run(member);
-                message.reply("successfully unbanned " + client.users.cache.get(member).username + ".");
-                console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively unbanned " + member + " (" + client.users.cache.get(member).username + ").");
+                message.reply("successfully unbanned " + arg[0] + ".");
+                logPrinter.printAdminUnbannedUser(client, message.author.id, member);
             }
         } catch {
             //Declare an error.

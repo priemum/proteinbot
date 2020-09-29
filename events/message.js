@@ -1,3 +1,5 @@
+const logPrinter = require("../logPrinter.js"); 
+
 module.exports = (client, message) => {
   //Ignore all bots.
   if (message.author.bot) return;
@@ -23,7 +25,7 @@ module.exports = (client, message) => {
   if (banDBQuery) {
     //User is banned...
     message.reply("you are banned from using Protein. Sorry. :hammer:\nCommon ban reasons include abusing the points system or intentionally trying to break the bot.");
-    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") attempted to use the bot, but is banned.");
+    logPrinter.printBannedUseAttempt(client, message.author.id);
     return;
   }
 

@@ -1,5 +1,5 @@
-const config = require("../config.json");
 const pointscheme = require("../pointscheme.json");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
     //get sports listed
@@ -15,5 +15,5 @@ exports.run = (client, message, args) => {
 
     //print info
     message.reply(":basketball: The current supported sports are: " + objectValuesAsString + ".");
-    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") ran the sports command.");
+    logPrinter.printUserRequestedSports(client, message.author.id);
 }

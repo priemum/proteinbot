@@ -1,4 +1,5 @@
 const config = require("../config.json");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
   //Check if sender has the correct permissions to operate this command.
@@ -20,7 +21,7 @@ exports.run = (client, message, args) => {
     client.commands.set(commandName, props);
     //Signal reload completion.
     message.reply(`The command ${commandName} has been reloaded`);
-    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") reloaded command \"" + commandName + "\"");
+    logPrinter.printAdminRequestedReload(client, message.author.id, commandName);
   } else {
     //If insufficient permissions, reject the command.
     message.reply("Insufficient permissions for this command.")

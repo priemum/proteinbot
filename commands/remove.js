@@ -1,3 +1,5 @@
+const LogPrinter = require("../logPrinter.js");
+
 exports.run = (client, message, args) => {
     //Get updated point scheme
     const pointscheme = require("../pointscheme.json");
@@ -43,7 +45,7 @@ exports.run = (client, message, args) => {
         sporttype = objectValue[`${type}`][3];
     } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
+        LogPrinter.printIndividualFailedRemovingPoints(client, message.author.id, type);
         return;
     }
 
@@ -93,7 +95,7 @@ exports.run = (client, message, args) => {
         //Write to database
         client.setScore.run(allTimeScore);
         client.setMonthlyScore.run(monthlyScore);
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") removed " + number + " " + unittype + " of " + type + ", removing " + totalvalue + " points.");
+        LogPrinter.printIndividualRemovedPoints(client, message.author.id, number, unittype, type, totalvalue);
 
         //Announce the removal
         message.reply("removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points. What a shame. \nYour points total this month is: " + monthlyScore.points + " :calendar_spiral: \nYour new all time points total is: " + allTimeScore.points + " :cold_sweat:")

@@ -1,7 +1,8 @@
+const logPrinter = require("../logPrinter.js");
 const config = require("../config.json");
+const pointscheme = require("../pointscheme.json");
 
 exports.run = (client, message, args) => {
-    const pointscheme = require("../pointscheme.json");
     //Check if sender has the correct permissions to operate this command.
     if (config.admins.includes(message.member.user.id)) {
         //Get arguments
@@ -97,7 +98,7 @@ exports.run = (client, message, args) => {
                 //Write to database
                 client.setScore.run(allTimeScore);
                 client.setMonthlyScore.run(monthlyScore);
-                console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.member.user.id).username + ") has administratively removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points from " + member + " (" + client.users.cache.get(member).username + ").");
+                logPrinter.printAdminRemovedPoints(client, message.author.id, member, number, unittype, type, totalvalue);
 
                 //Announce the addition
                 message.reply("Administratively removed " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points from " + args[0] + ".\nPoints total this month is: " + monthlyScore.points + " :calendar_spiral:\nNew all time points total is: " + allTimeScore.points + " :muscle:")

@@ -1,9 +1,9 @@
 const fs = require("fs");
 var os = require("os");
+const userLookup = require("../userLookup.js");
+const logPrinter = require("../logPrinter.js");
 
 exports.run = (client, message, args) => {
-    //Get user
-    let user = message.member.user.id;
     //Get arguments
     let suggestion = args;
     if (suggestion == "") {
@@ -15,15 +15,18 @@ exports.run = (client, message, args) => {
     var finalsuggestion = suggestion.slice(0, suggestion.length - 1).join(' ') + " " + suggestion.slice(-1)
 
     //Append the time and date, as well as the suggester.
-    var suggestionForStorage = ("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + "): " + finalsuggestion);
-
-    //Store the suggestion
-    fs.appendFile("./suggestions.txt", suggestionForStorage + os.EOL, function (err) {
-        if (err) throw err;
-    });
+    async function store() {
+        let username = await userLookup(client, message.author.id);
+        var suggestionForStorage = ("[" + (new Date()) + "] " + message.author.id + " (" + username + "): " + finalsuggestion);
+        //Store the suggestion
+        fs.appendFile("./suggestions.txt", suggestionForStorage + os.EOL, function (err) {
+            if (err) throw err;
+        });
+    }
+    store();
 
     //Announce the suggestion was logged
-    console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(message.author.id).username + ") successfully filed a suggestion.");
+    logPrinter.printSubmittedSuggestion(client, message.author.id);
     message.reply("thank you for your suggestion, it has been logged. :smiling_face_with_3_hearts:")
     return;
 }

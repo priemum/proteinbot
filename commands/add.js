@@ -1,6 +1,7 @@
+const pointscheme = require("../pointscheme.json");
+const logPrinter = require("../logPrinter.js");
+
 exports.run = (client, message, args) => {
-    //Get updated point scheme
-    const pointscheme = require("../pointscheme.json");
     //Get user id.
     let user = message.member.user.id;
     //Get arguments
@@ -45,7 +46,7 @@ exports.run = (client, message, args) => {
         sporttype = objectValue[`${type}`][3];
     } else {
         message.reply(`${type}` + " is not a valid or supported sport.");
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") requested an invalid sport of " + type + ".");
+        logPrinter.printIndividualFailedAddingPoints(client, message.author.id, type);
         return;
     }
 
@@ -92,7 +93,7 @@ exports.run = (client, message, args) => {
         client.setScore.run(allTimeScore);
         client.setMonthlyScore.run(monthlyScore);
 
-        console.log("[" + (new Date()) + "] " + message.author.id + " (" + client.users.cache.get(user).username + ") added " + number + " " + unittype + " of " + type + ", totalling " + totalvalue + " points.");
+        logPrinter.printIndividualAddedPoints(client, message.author.id, number, unittype, type, totalvalue);
 
         //Prepare the "motivation"
         if (number < 20) {
